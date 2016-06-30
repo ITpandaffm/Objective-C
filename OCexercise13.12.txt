@@ -1,0 +1,22 @@
+//
+//  main.m
+//  MyPC
+//
+//  Created by ffm on 16/6/18.
+//  Copyright (c) 2016年 ITPanda. All rights reserved.
+//BNR Ojective-C编程  练习13.12
+
+#import <Foundation/Foundation.h>
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        //发送currentHost消息给Host类以获取NSHost实例
+        NSHost *host = [NSHost currentHost];           
+
+	//向NSHost实例发送localizedName消息。可返回你计算机的名字
+	  NSString *string = [host localizedName];
+        NSLog(@"the name of your computer is %@",string);
+        
+    }
+    return 0;
+}
