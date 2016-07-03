@@ -1,0 +1,43 @@
+//
+//  main.m
+//  Groceries
+//
+//  Created by ffm on 16/6/19.
+//  Copyright (c) 2016年 ITPanda. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+@interface NSString : NSObject
+@end
+
+@implementation NSString
+
+-(NSString *)description{
+    return [NSString stringWithFormat:@"%@",self];
+}
+
+@end
+
+
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        NSMutableArray *shoppingList = [NSMutableArray array];
+        NSString *things1 = @"Loaf of bread";
+        NSString *things2 = @"Container of Milk";
+        NSString *things3 = @"Stick of butter";
+        [shoppingList addObject:things1];
+        [shoppingList addObject:things2];
+        [shoppingList insertObject:things3 atIndex:2];
+        
+        NSLog(@"My shoppingList is");
+        for (NSString *str in shoppingList) {
+            NSLog(@"%@",str);
+        }
+
+    }
+    return 0;
+}
+
+
+
