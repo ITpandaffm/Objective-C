@@ -1,0 +1,61 @@
+//
+//  main.m
+//  InterestingNames
+//
+//  Created by ffm on 16/6/19.
+//  Copyright (c) 2016年 ITPanda. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+      //示例代码
+        //读入文件并将数据保存在字符串中（没有处理可能发生的错误）
+         NSString *nameString= [NSString stringWithContentsOfFile:@"/usr/share/dict/propernames"
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:NULL];
+        //将所得字符串按\n进行分割，并保存在数组中
+        NSArray *names=[nameString componentsSeparatedByString:@"\n"];
+        //枚举数组，一次处理一个字符串
+        for (NSString *n in names) {
+            //查找“aa”字符串 忽略大小写
+            NSRange r=[n rangeOfString:@"AA" options:NSCaseInsensitiveSearch];
+            
+            if (r.location!=NSNotFound) {
+                NSLog(@"%@",n);
+            }
+        }
+    }
+    
+    NSLog(@"\n\n\n");
+    //找出既是专有名词又是单词的字符串
+    
+    NSString *name = [NSString stringWithContentsOfFile:@"/usr/share/dict/propernames"
+                                               encoding:NSUTF8StringEncoding
+                                                  error:NULL];
+    NSArray *nameForExercise = [name componentsSeparatedByString:@"\n"];
+    
+    NSString *word = [NSString stringWithContentsOfFile:@"/usr/share/dict/words"
+                                               encoding:NSUTF8StringEncoding
+                                                  error:NULL];
+    NSArray *wordForExercise = [word componentsSeparatedByString:@"\n"];
+    
+  
+    
+    
+    for (NSString *str in nameForExercise) {
+        
+        for (NSString *str2 in wordForExercise) {
+            NSRange range= [str rangeOfString:str2 options:NSCaseInsensitiveSearch];
+            if (range.location!=NSNotFound) {
+                if ([str length]==[str2 length]) {
+                    NSLog(@"find! \n in words:%@ , in names:%@",str2,str);
+                }
+            }
+        }
+    }
+
+    
+    return 0;
+}
