@@ -1,0 +1,24 @@
+//
+//  main.m
+//  NSLocale
+//
+//  Created by ffm on 16/7/7.
+//  Copyright © 2016年 ITPanda. All rights reserved.
+//
+/*
+ NSLocale实例可以保存针对不同地理位置的相关信息，程序可以获取用户当前的NSLocale实例，然后查询相关的信息。
+ */
+
+#import <Foundation/Foundation.h>
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        
+        NSLog(@"Hello, World!");
+        
+        NSLocale *here = [NSLocale currentLocale];
+        NSString *currency = [here objectForKey:@"currency"];
+        NSLog(@"money is %@",currency);
+    }
+    return 0;
+}
