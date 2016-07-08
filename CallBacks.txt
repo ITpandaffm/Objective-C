@@ -1,0 +1,31 @@
+//
+//  BNRLogger.m
+//  CallBacks
+//
+//  Created by ffm on 16/7/8.
+//  Copyright © 2016年 ITPanda. All rights reserved.
+//
+
+#import "BNRLogger.h"
+
+@implementation BNRLogger
+
+-(NSString *)lastTimesString{
+    static NSDateFormatter *dateFormatter = nil;
+    if (!dateFormatter) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        NSLog(@"current dateformatter");
+    }
+    return [dateFormatter stringFromDate:self.lastTime];
+}
+
+- (void)updateLastTime:(NSTimer *)t{
+    NSDate *now = [NSDate date];
+    [self setLastTime:now];
+    NSLog(@"just set time to %@",self.lastTimesString);
+}
+
+
+@end
