@@ -1,0 +1,73 @@
+//
+//  main.m
+//  Stringz
+//
+//  Created by ffm on 16/7/7.
+//  Copyright © 2016年 ITPanda. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+
+
+
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        
+//将字符串写入文件
+        NSMutableString *str = [[NSMutableString alloc] init];
+        for (int i = 0 ; i < 10 ; i++){
+            [str appendString:@"im it_Panda~!😁\n"];
+        }
+
+        
+//如果重新再调用方法往同一个文件写入时，会把内容洗掉，再重新写入。。不会接着写
+        
+        NSError *error;
+        BOOL success = [str writeToFile:@"/Users/fengwenguang/Desktop/hey.txt"
+                             atomically:YES
+                            encoding:NSUTF8StringEncoding
+                                  error:&error];
+        if (success) {
+            NSLog(@"done");
+        }else{
+            NSLog(@"%@",error);
+        }
+    //读取文件
+
+        NSString *readStr = [[NSString alloc] initWithContentsOfFile:@"/Users/fengwenguang/Desktop/hey.txt" encoding:NSUTF8StringEncoding error:&error];
+        if (readStr) {
+            NSLog(@"%@",str);
+        }else{
+            NSLog(@"%@",error);
+        }
+        
+    //从网页上读取文件
+        
+        NSURL *url = [NSURL URLWithString:@"https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png"];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        error = nil;
+        NSData *data = [NSURLConnection sendSynchronousRequest:request  returningResponse:NULL error:&error];
+        if (!data) {
+            NSLog(@"%@",[error localizedDescription]);
+        }else{
+            NSLog(@"bytes:  %lu",[data length]);
+        }
+        BOOL writter = [data writeToFile:@"/Users/fengwenguang/Desktop/it_Panda.png" options:NSDataWritingAtomic error:&error];
+        if (!writter) {
+            NSLog(@"%@",[error localizedDescription]);
+        }
+        
+        //读取文件，
+        NSData *readData = [NSData dataWithContentsOfFile:@"/Users/fengwenguang/Desktop/it_Panda.png"];
+        NSLog(@"%lu bytes",[readData length]);
+        
+        //获取你的桌面的路径
+        NSArray *desktops = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES);
+        NSString *desktopPath = desktops[0];
+        NSLog(@"%@",desktopPath);
+
+    }
+    return 0;
+}
