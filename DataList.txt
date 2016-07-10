@@ -1,0 +1,51 @@
+//
+//  main.m
+//  DateList
+//
+//  Created by ffm on 16/6/19.
+//  Copyright (c) 2016年 ITPanda. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        //创建三个NSDate对象
+        NSDate *now = [NSDate date];
+        NSDate *tomorrow = [now dateByAddingTimeInterval:24*60*60];
+        NSDate *yesterday = [now dateByAddingTimeInterval:-24*60*60];
+        
+        //创建一个数组包含以上这三个NSDate对象
+        NSArray *datelist = @[now,tomorrow,yesterday];
+        NSUInteger count = [datelist count];         //通过count消息获取datelist中对象的个数
+        for (int i=0; i<count; i++) {
+            NSLog(@"%@",datelist[i]);
+        }
+   //     NSLog(@"%@",datelist[3]);       访问索引超出范围 程序会崩溃
+ 
+        
+        //快速枚举 for的优化版～
+        for (NSData *d in datelist) {
+            NSLog(@"from newFor :%@",d);
+        }
+        //使用NSArray 的子类 NSMutableArray可以添加，删除或者对指针进行重新排序
+        //创建空数组
+        NSMutableArray *datelist2 = [NSMutableArray array];
+        
+        //将两个NSDate对象加入新创建的数组
+        [datelist2 addObject:now];
+        [datelist2 addObject:tomorrow];
+
+        //将yesterday插入到数组的起始位置
+        [datelist2 insertObject:yesterday atIndex:0];
+        
+        for (NSData *d in datelist2) {
+            NSLog(@"%@",d);
+        }
+        
+        //使用移除方法 删除yesterday指针
+        [datelist2 removeObject:yesterday];
+        NSLog(@"%@",datelist2[0]);
+    }
+    return 0;
+}
