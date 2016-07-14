@@ -1,0 +1,88 @@
+//
+//  main.m
+//  DataLink
+//
+//  Created by ffm on 16/7/10.
+//  Copyright © 2016年 ITPanda. All rights reserved.
+//实现一个单向链表，并写程序把单向链表进行逆序
+//本来想着再增加一个＊end节点，但是考虑再三，意义不大。
+//7.10更新，销毁链表。
+
+#import <Foundation/Foundation.h>
+
+
+typedef struct Node_{
+    void *value;
+    struct Node_ *next;
+}Node;
+
+Node *creatNode(void *value,Node *next){
+    Node *node = malloc(sizeof(Node));
+    node->value = value;
+    node->next = next;
+    return node;
+}
+
+void printList (Node *firstNode){
+    for (Node *node=firstNode; node!=NULL; node=node->next) {
+        printf("Current node value is %s\n",node->value);
+    }
+}
+void reverse (Node *firstNode){
+    //首先判断链表是否为空或者链表只有一个节点
+    if (firstNode==NULL||firstNode->next==NULL) {
+        return;
+    }
+    Node *pre = firstNode;
+    Node *mid = firstNode->next;
+    Node *after = NULL;
+    while (mid!=NULL) {
+        after = mid->next;
+        mid->next = pre;
+        pre = mid;
+        mid = after;
+    }
+    firstNode->next = NULL;
+    firstNode = pre;
+}
+
+void destroy (Node *firstNode){
+    Node *node = firstNode;
+    Node *temp;
+    while (node!=NULL) {
+        temp = node;
+        node = node->next;
+        free(temp);
+    }
+}
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        Node *current = creatNode("😏链表原点在此！", NULL);
+        Node *first = current;
+        
+        current->next = creatNode("HelloWorld", NULL);      //顺序创建节点
+        current = current->next;
+        
+        current->next = creatNode("Hey_Jikexueyuan", NULL);
+        current = current->next;
+        
+        current->next = creatNode("Im the last", NULL);
+        current = current->next;
+        
+        //在最前面插入节点
+        first = creatNode("I m NO.1", first);
+        printf("before reverse\n");
+        printList(first);
+        
+        reverse(first);
+        printf("after reverse\n");
+        printList(current);
+        
+        //链表分配了内存要记得释放！ 传入的是头节点！
+        destroy(current);
+        
+        
+    }
+    return 0;
+}
